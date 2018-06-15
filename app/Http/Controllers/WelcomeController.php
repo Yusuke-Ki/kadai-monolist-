@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Http\Controllers\Controller;
+
+use App\Item;
+
+
+
 class WelcomeController extends Controller
 {
     /**
@@ -11,8 +17,12 @@ class WelcomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+ 
     public function index()
     {
-        return view('welcome');
+        $items = Item::orderBy('updated_at', 'desc')->paginate(20);
+        return view('welcome', [
+            'items' => $items,
+        ]);
     }
 }
